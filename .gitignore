@@ -1,0 +1,50 @@
+# ==========================
+# Python
+# ==========================
+
+# Virtual Environment
+backend/.venv/
+
+# Python Cache
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables
+.env
+.env.*
+
+# ==========================
+# VS Code
+# ==========================
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# ==========================
+# Flutter
+# ==========================
+
+mobile/.dart_tool/
+mobile/build/
+
+# Android
+mobile/android/.gradle/
+mobile/android/app/build/
+
+# iOS
+mobile/ios/Pods/
+
+# ==========================
+# Operating System
+# ==========================
+
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Logs
+# ==========================
+
+*.log
