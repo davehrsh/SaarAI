@@ -1,5 +1,6 @@
 from fastapi import UploadFile
 
+from app.services.gemini_service import GeminiService
 
 class FoodAnalysisService:
 
@@ -7,8 +8,13 @@ class FoodAnalysisService:
 
         image_bytes = await file.read()
 
+        gemini = GeminiService()
+
+        response = gemini.describe_image(
+        image_bytes=image_bytes,
+        mime_type=file.content_type
+        )
+
         return {
-            "filename": file.filename,
-            "content_type": file.content_type,
-            "size": len(image_bytes)
+            "description": response
         }
