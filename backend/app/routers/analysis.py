@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 from app.schemas.analysis_response import AnalysisResponse
+from app.services.food_analysis_service import FoodAnalysisService
 
 router = APIRouter(
     prefix="/api/v1",
@@ -7,11 +8,7 @@ router = APIRouter(
 )
 
 
-@router.post("/analyze", response_model=AnalysisResponse)
-async def analyze():
-    return {
-    "product_name": "Demo Product",
-    "health_score": 82,
-    "rating": "Good",
-    "summary": "This is a dummy response. AI integration is coming next."
-}
+@router.post("/analyze")
+async def analyze(file: UploadFile = File(...)):
+    service = FoodAnalysisService()
+    return await service.analyze(file)
