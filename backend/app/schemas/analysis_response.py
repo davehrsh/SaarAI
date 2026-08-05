@@ -1,8 +1,5 @@
-from pydantic import BaseModel
+from app.schemas.analysis_result import AnalysisResult
 
 
-class AnalysisResponse(BaseModel):
-    product_name: str
-    health_score: int
+class AnalysisResponse(AnalysisResult):
     rating: str
-    summary: str
