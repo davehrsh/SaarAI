@@ -1,6 +1,11 @@
+import logging
+
 from fastapi import FastAPI
 
 from app.routers.analysis import router as analysis_router
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="SaarAI API",
@@ -9,7 +14,6 @@ app = FastAPI(
 )
 
 app.include_router(analysis_router)
-
 
 @app.get("/")
 async def root():
