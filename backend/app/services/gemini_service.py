@@ -1,6 +1,6 @@
 from google import genai
 from google.genai import types
-
+from app.prompts.analysis_prompt import ANALYSIS_PROMPT
 from app.core.config import GEMINI_API_KEY
 
 
@@ -18,7 +18,7 @@ class GeminiService:
 
         response = self.client.models.generate_content(
         model="gemini-flash-latest",
-        contents=["Describe this image in one sentence.", image_part]
+        contents=[ANALYSIS_PROMPT,image_part]
     )
 
         return response.text

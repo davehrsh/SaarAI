@@ -4,6 +4,9 @@ from pydantic import BaseModel
 
 
 class AnalysisResult(BaseModel):
+
+    is_food_product: bool
+
     product_name: str | None
     brand: str | None
     food_category: str | None

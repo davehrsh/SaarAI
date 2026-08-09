@@ -1,5 +1,8 @@
+import json
+
 from fastapi import UploadFile
 
+from app.routers import analysis
 from app.services.gemini_service import GeminiService
 
 class FoodAnalysisService:
@@ -15,6 +18,6 @@ class FoodAnalysisService:
         mime_type=file.content_type
         )
 
-        return {
-            "description": response
-        }
+        analysis = json.loads(response)
+
+        return analysis
