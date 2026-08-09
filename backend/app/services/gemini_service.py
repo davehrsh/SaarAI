@@ -16,28 +16,36 @@ class GeminiService:
         self.client = genai.Client(api_key=GEMINI_API_KEY)
         logger.info("Gemini client initialized successfully.")
 
-    def describe_image(self, image_bytes: bytes, mime_type: str):
+    def describe_images(self, images: list[dict]):
+
         logger.info(
-            "Preparing Gemini request. mime_type=%s image_size=%d bytes",
-            mime_type,
-            len(image_bytes),
+            "Preparing Gemini request with %d image(s).",
+            len(images),
         )
 
-        image_part = types.Part.from_bytes(
-            data=image_bytes,
-            mime_type=mime_type,
-        )
+        contents = [ANALYSIS_PROMPT]
 
-        logger.info("Image converted to Gemini Part.")
+        for index, image in enumerate(images, start=1):
+
+            logger.info(
+                "Converting image %d to Gemini Part. mime_type=%s size=%d bytes",
+                index,
+                image["mime_type"],
+                len(image["bytes"]),
+            )
+
+            contents.append(
+                types.Part.from_bytes(
+                    data=image["bytes"],
+                    mime_type=image["mime_type"],
+                )
+            )
 
         logger.info("Sending request to Gemini model: gemini-flash-latest")
 
         response = self.client.models.generate_content(
             model="gemini-flash-latest",
-            contents=[
-                ANALYSIS_PROMPT,
-                image_part,
-            ],
+            contents=contents,
         )
 
         logger.info("Received response from Gemini.")

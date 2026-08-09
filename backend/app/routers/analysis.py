@@ -3,7 +3,6 @@ import logging
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from app.schemas.analysis_response import AnalysisResponse
-from app.schemas.no_food_response import NoFoodResponse
 from app.services.food_analysis_service import FoodAnalysisService
 
 logger = logging.getLogger(__name__)
@@ -23,26 +22,39 @@ ALLOWED_IMAGE_TYPES = {
 
 @router.post(
     "/analyze",
-    response_model=AnalysisResponse | NoFoodResponse,
+    response_model=AnalysisResponse,
 )
-async def analyze(file: UploadFile = File(...)):
+async def analyze(files: list[UploadFile] = File(...)):
+
     logger.info(
-        "Received /analyze request. filename=%s content_type=%s",
-        file.filename,
-        file.content_type,
+        "Received /analyze request with %d image(s).",
+        len(files),
     )
 
-    if file.content_type not in ALLOWED_IMAGE_TYPES:
+    if len(files) > 3:
         logger.warning(
-            "Rejected upload due to unsupported media type. filename=%s content_type=%s",
-            file.filename,
-            file.content_type,
+            "Rejected upload because %d images were provided.",
+            len(files),
         )
 
         raise HTTPException(
             status_code=400,
-            detail="Unsupported media format. Please upload a JPG, JPEG or PNG image.",
+            detail="You can upload a maximum of 3 images.",
         )
+
+    for file in files:
+
+        if file.content_type not in ALLOWED_IMAGE_TYPES:
+            logger.warning(
+                "Rejected upload due to unsupported media type. filename=%s content_type=%s",
+                file.filename,
+                file.content_type,
+            )
+
+            raise HTTPException(
+                status_code=400,
+                detail="Unsupported image format. Please upload a JPG, JPEG or PNG image.",
+            )
 
     logger.info("Upload validation passed.")
 
@@ -50,7 +62,7 @@ async def analyze(file: UploadFile = File(...)):
 
     logger.info("Calling FoodAnalysisService.analyze().")
 
-    result = await service.analyze(file)
+    result = await service.analyze(files)
 
     logger.info("Food analysis request completed successfully.")
 

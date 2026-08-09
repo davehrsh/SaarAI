@@ -7,99 +7,106 @@ from pydantic import ValidationError
 
 from app.schemas.analysis_result import AnalysisResult
 from app.schemas.analysis_response import AnalysisResponse
-from app.schemas.no_food_response import NoFoodResponse
 from app.services.gemini_service import GeminiService
 from app.utils.rating import get_rating
 
 logger = logging.getLogger(__name__)
 
+
 class FoodAnalysisService:
 
- async def analyze(self, file: UploadFile):
+    async def analyze(self, files: list[UploadFile]):
 
-    logger.info("Food analysis request received.")
+        logger.info("Food analysis request received.")
 
-    try:
+        try:
 
-        logger.info(
-                "Reading uploaded file. filename=%s content_type=%s",
-                file.filename,
-                file.content_type,
-            )
+            images = []
 
-        image_bytes = await file.read()
+            logger.info("Reading %d uploaded image(s).", len(files))
 
-        logger.info(
-                "Image read successfully. Size=%d bytes",
-                len(image_bytes),
-            )
+            for index, file in enumerate(files, start=1):
 
-        gemini = GeminiService()
+                image_bytes = await file.read()
 
-        logger.info("GeminiService initialized.")
-        logger.info("Sending image to Gemini for analysis.")
+                logger.info(
+                    "Image %d read successfully. filename=%s content_type=%s size=%d bytes",
+                    index,
+                    file.filename,
+                    file.content_type,
+                    len(image_bytes),
+                )
 
-        response = gemini.describe_image(
-            image_bytes=image_bytes,
-            mime_type=file.content_type,
-        )
+                images.append(
+                    {
+                        "bytes": image_bytes,
+                        "mime_type": file.content_type,
+                    }
+                )
 
-        logger.info("Received response from Gemini.")
-        logger.debug("Raw Gemini response: %s", response)
+            gemini = GeminiService()
 
-        analysis = json.loads(response)
+            logger.info("GeminiService initialized.")
+            logger.info("Sending %d image(s) to Gemini for analysis.", len(images))
 
-        logger.info("Successfully parsed Gemini JSON response.")
-        logger.debug("Parsed analysis: %s", analysis)
+            gemini_response = gemini.describe_images(images)
 
-        analysis_result = AnalysisResult(**analysis)
+            logger.info("Received response from Gemini.")
+            logger.debug("Raw Gemini response: %s", gemini_response)
 
-        logger.info(
+            analysis = json.loads(gemini_response)
+
+            logger.info("Successfully parsed Gemini JSON response.")
+            logger.debug("Parsed analysis: %s", analysis)
+
+            analysis_result = AnalysisResult(**analysis)
+
+            logger.info(
                 "AnalysisResult validated successfully. is_food_product=%s health_score=%s",
                 analysis_result.is_food_product,
                 analysis_result.health_score,
             )
 
-        if not analysis_result.is_food_product:
-         
-         logger.warning(
-                    "Uploaded image is not a packaged food product."
+            if not analysis_result.is_food_product:
+
+                logger.warning(
+                    "Uploaded images do not contain a packaged food product."
                 )
-         
-         raise HTTPException(
+
+                raise HTTPException(
                     status_code=400,
                     detail=(
                         "No packaged food product detected. "
                         "Please upload a clear image of a packaged food product."
                     ),
                 )
-        
-        rating = get_rating(analysis_result.health_score)
 
-        logger.info(
+            rating = get_rating(analysis_result.health_score)
+
+            logger.info(
                 "Health rating calculated. score=%s rating=%s",
                 analysis_result.health_score,
                 rating,
             )
 
-        response = AnalysisResponse(
+            analysis_response = AnalysisResponse(
                 **analysis_result.model_dump(),
                 rating=rating,
             )
 
-        logger.info("Food analysis completed successfully.")
+            logger.info("Food analysis completed successfully.")
 
-        return response
+            return analysis_response
 
-    except ClientError:
-        logger.exception("Gemini API request failed")
+        except ClientError:
+            logger.exception("Gemini API request failed")
 
-        raise HTTPException(
-            status_code=503,
-            detail="The analysis service is temporarily unavailable. Please try again later.",
-        )
+            raise HTTPException(
+                status_code=503,
+                detail="The analysis service is temporarily unavailable. Please try again later.",
+            )
 
-    except json.JSONDecodeError:
+        except json.JSONDecodeError:
             logger.exception("Failed to decode Gemini JSON response.")
 
             raise HTTPException(
@@ -107,7 +114,7 @@ class FoodAnalysisService:
                 detail="Something went wrong while processing your request.",
             )
 
-    except ValidationError:
+        except ValidationError:
             logger.exception("Gemini response failed Pydantic validation.")
 
             raise HTTPException(
@@ -115,7 +122,7 @@ class FoodAnalysisService:
                 detail="Something went wrong while processing your request.",
             )
 
-    except HTTPException as e:
+        except HTTPException as e:
             logger.warning(
                 "Returning HTTPException. status_code=%d detail=%s",
                 e.status_code,
@@ -123,7 +130,7 @@ class FoodAnalysisService:
             )
             raise
 
-    except Exception:
+        except Exception:
             logger.exception("Unexpected server error during food analysis.")
 
             raise HTTPException(
