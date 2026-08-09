@@ -268,6 +268,8 @@ Do not return:
 Return exactly this structure:
 
 {
+    "is_food_product": true,
+
     "product_name": null,
     "brand": null,
     "food_category": null,
@@ -305,6 +307,12 @@ Rules:
 - score_factors must contain plain-language explanations.
 - Do not use symbols such as (+), (-), +15 or -20.
 - Return a single valid JSON object only.
+- For valid packaged food products, always return:
 
+"is_food_product": true
+
+For images that do not contain a packaged food product, always return:
+
+"is_food_product": false
 Your entire response must be a single valid JSON object that can be parsed directly without any preprocessing.
 """
