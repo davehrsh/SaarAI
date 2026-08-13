@@ -15,6 +15,10 @@ backend/.venv/
 .env.*
 backend/.env
 
+# Allow template env files
+!.env.example
+!backend/.env.example
+
 # ==========================
 # VS Code
 # ==========================
