@@ -53,7 +53,7 @@ async def analyze(files: list[UploadFile] = File(...)):
 
             raise HTTPException(
                 status_code=400,
-                detail="Unsupported image format. Please upload a JPG, JPEG or PNG image.",
+                detail="Unsupported image format. Please upload a JPG, JPEG, PNG, or WEBP image.",
             )
 
     logger.info("Upload validation passed.")

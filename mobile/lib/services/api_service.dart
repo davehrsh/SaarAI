@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 import '../models/analysis_response.dart';
 
@@ -26,10 +27,7 @@ class ApiService {
 
     for (final image in images) {
       request.files.add(
-        await http.MultipartFile.fromPath(
-          'files',
-          image.path,
-        ),
+        await _createMultipartFile(image),
       );
     }
 
@@ -46,6 +44,37 @@ class ApiService {
       statusCode: response.statusCode,
       message: _extractErrorMessage(response.body),
     );
+  }
+
+  Future<http.MultipartFile> _createMultipartFile(File image) async {
+    final mimeType = _getMimeType(image.path);
+
+    return http.MultipartFile.fromPath(
+      'files',
+      image.path,
+      contentType: mimeType,
+    );
+  }
+
+  MediaType _getMimeType(String path) {
+    final extension = path.split('.').last.toLowerCase();
+
+    switch (extension) {
+      case 'jpg':
+      case 'jpeg':
+        return MediaType('image', 'jpeg');
+
+      case 'png':
+        return MediaType('image', 'png');
+
+      case 'webp':
+        return MediaType('image', 'webp');
+
+      default:
+        throw ArgumentError(
+          'Unsupported image format: .$extension',
+        );
+    }
   }
 
   String _extractErrorMessage(String body) {

@@ -2,7 +2,7 @@ import json
 import logging
 
 from fastapi import HTTPException, UploadFile
-from google.genai.errors import ClientError
+from google.genai.errors import ClientError, ServerError
 from pydantic import ValidationError
 
 from app.schemas.analysis_result import AnalysisResult
@@ -98,7 +98,7 @@ class FoodAnalysisService:
 
             return analysis_response
 
-        except ClientError:
+        except (ClientError, ServerError):
             logger.exception("Gemini API request failed")
 
             raise HTTPException(
