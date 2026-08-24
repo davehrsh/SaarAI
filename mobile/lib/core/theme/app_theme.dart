@@ -8,6 +8,8 @@ class AppTheme {
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
+      useMaterial3: true,
+
       scaffoldBackgroundColor: AppColors.background,
 
       colorScheme: const ColorScheme.dark(
@@ -24,7 +26,24 @@ class AppTheme {
         centerTitle: true,
       ),
 
-      useMaterial3: true,
+      splashColor: AppColors.neonGreen.withValues(alpha: 0.08),
+      highlightColor: AppColors.neonGreen.withValues(alpha: 0.05),
+
+      snackBarTheme: const SnackBarThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        contentTextStyle: TextStyle(
+          color: AppColors.textPrimary,
+          fontSize: 13,
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+          side: BorderSide(
+            color: AppColors.border,
+            width: 1,
+          ),
+        ),
+      ),
     );
   }
 }
