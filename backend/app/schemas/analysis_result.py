@@ -22,8 +22,6 @@ class AnalysisResult(BaseModel):
 
     score_factors: list[str] = Field(default_factory=list)
 
-    summary: str
-
     confidence: Literal["High", "Medium", "Low"]
 
     missing_information: list[str] = Field(default_factory=list)

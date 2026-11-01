@@ -288,9 +288,7 @@ Return exactly this structure:
 
     "negative_factors": [],
 
-    "score_factors": [],
-
-    "summary": "",
+    "score_factors": [],   
 
     "confidence": "High",
 

@@ -28,6 +28,19 @@ class AppTypography {
     );
   }
 
+  static TextStyle devanagariArcade({
+  double fontSize = 48,
+  Color color = AppColors.neonGreen,
+  }) {
+  return GoogleFonts.notoSansDevanagari(
+    fontSize: fontSize,
+    color: color,
+    fontWeight: FontWeight.w900,
+    height: 1.0,
+    letterSpacing: 1,
+  );
+  }
+
   // Large display text.
   static TextStyle display({
     double fontSize = 22,

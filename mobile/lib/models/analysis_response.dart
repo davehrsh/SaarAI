@@ -13,7 +13,6 @@ class AnalysisResponse {
   final List<String> negativeFactors;
   final List<String> scoreFactors;
 
-  final String summary;
   final String confidence;
 
   final List<String> missingInformation;
@@ -31,7 +30,6 @@ class AnalysisResponse {
     required this.positiveFactors,
     required this.negativeFactors,
     required this.scoreFactors,
-    required this.summary,
     required this.confidence,
     required this.missingInformation,
     required this.rating,
@@ -49,7 +47,6 @@ class AnalysisResponse {
       positiveFactors: List<String>.from(json['positive_factors'] ?? []),
       negativeFactors: List<String>.from(json['negative_factors'] ?? []),
       scoreFactors: List<String>.from(json['score_factors'] ?? []),
-      summary: json['summary'] as String,
       confidence: json['confidence'] as String,
       missingInformation:
           List<String>.from(json['missing_information'] ?? []),

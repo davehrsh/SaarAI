@@ -223,14 +223,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeader() {
     return Column(
       children: [
-        Text(
-          'SAARAI',
-          textAlign: TextAlign.center,
-          style: AppTypography.arcade(
-            fontSize: 22,
-            color: AppColors.neonGreen,
-          ),
+        RichText(
+  textAlign: TextAlign.center,
+  text: TextSpan(
+    children: [
+      TextSpan(
+        text: 'सार',
+        style: AppTypography.devanagariArcade(
+          fontSize: 35,
+          color: AppColors.neonGreen,
         ),
+      ),
+      TextSpan(
+        text: 'AI',
+        style: AppTypography.arcade(
+          fontSize: 22,
+          color: AppColors.neonGreen,
+        ),
+      ),
+    ],
+  ),
+),
         const SizedBox(height: 10),
         Text(
           'FOOD SCANNER',
@@ -453,134 +466,347 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildResult() {
-    final result = _result!;
+  final result = _result!;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ArcadePanel(
-          child: Column(
-            children: [
-              Text(
-                'ANALYSIS COMPLETE',
-                style: AppTypography.arcade(
-                  fontSize: 11,
-                  color: AppColors.cyan,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                result.productName ?? 'UNKNOWN PRODUCT',
-                textAlign: TextAlign.center,
-                style: AppTypography.arcade(
-                  fontSize: 16,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              if (result.brand != null) ...[
-                const SizedBox(height: 10),
-                Text(
-                  result.brand!,
-                  style: AppTypography.bodySecondary,
-                ),
-              ],
-              const SizedBox(height: 28),
-              _buildScore(result),
-            ],
-          ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      // ─────────────────────────────────────────────
+      // SCORECARD — SINGLE HUD UNIT
+      // ─────────────────────────────────────────────
+
+      _buildScoreCard(result),
+
+      // ─────────────────────────────────────────────
+      // OTHER RESULT SECTIONS
+      // ─────────────────────────────────────────────
+
+      if (result.positiveFactors.isNotEmpty)
+        _buildListSection(
+          'POSITIVE FACTORS',
+          result.positiveFactors,
+          AppColors.neonGreen,
         ),
-        const SizedBox(height: 14),
-        _buildResultSection(
-          'SUMMARY',
-          result.summary,
+
+      if (result.negativeFactors.isNotEmpty)
+        _buildListSection(
+          'NEGATIVE FACTORS',
+          result.negativeFactors,
+          AppColors.red,
+        ),
+
+      if (result.scoreFactors.isNotEmpty)
+        _buildListSection(
+          'SCORE FACTORS',
+          result.scoreFactors,
+          AppColors.orange,
+        ),
+
+      if (result.allergens.isNotEmpty)
+        _buildListSection(
+          'ALLERGENS',
+          result.allergens,
+          AppColors.red,
+        ),
+
+      if (result.ingredients.isNotEmpty)
+        _buildIngredientsSection(result.ingredients),
+
+      _buildResultSection(
+        'CONFIDENCE',
+        result.confidence.toUpperCase(),
+        AppColors.cyan,
+      ),
+
+      if (result.missingInformation.isNotEmpty)
+        _buildListSection(
+          'MISSING INFORMATION',
+          result.missingInformation,
           AppColors.yellow,
         ),
-        if (result.positiveFactors.isNotEmpty)
-          _buildListSection(
-            'POSITIVE FACTORS',
-            result.positiveFactors,
-            AppColors.neonGreen,
-          ),
-        if (result.negativeFactors.isNotEmpty)
-          _buildListSection(
-            'NEGATIVE FACTORS',
-            result.negativeFactors,
-            AppColors.red,
-          ),
-        if (result.scoreFactors.isNotEmpty)
-          _buildListSection(
-            'SCORE FACTORS',
-            result.scoreFactors,
-            AppColors.orange,
-          ),
-        if (result.allergens.isNotEmpty)
-          _buildListSection(
-            'ALLERGENS',
-            result.allergens,
-            AppColors.red,
-          ),
-        if (result.ingredients.isNotEmpty)
-          _buildListSection(
-            'INGREDIENTS',
-            result.ingredients,
-            AppColors.cyan,
-          ),
-        _buildResultSection(
-          'CONFIDENCE',
-          result.confidence.toUpperCase(),
-          AppColors.cyan,
-        ),
-        if (result.missingInformation.isNotEmpty)
-          _buildListSection(
-            'MISSING INFORMATION',
-            result.missingInformation,
-            AppColors.yellow,
-          ),
-        const SizedBox(height: 20),
-        ArcadeButton(
-          label: 'SCAN ANOTHER',
-          icon: Icons.refresh,
-          onPressed: _reset,
-          outlined: true,
+
+      const SizedBox(height: 20),
+
+      ArcadeButton(
+        label: 'SCAN ANOTHER',
+        icon: Icons.refresh,
+        onPressed: _reset,
+        outlined: true,
+      ),
+    ],
+  );
+}
+
+  Widget _buildScoreCard(AnalysisResponse result) {
+  final scoreColor = _scoreColor(result.healthScore);
+
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.fromLTRB(
+      14,
+      26,
+      14,
+      18,
+    ),
+    decoration: BoxDecoration(
+      color: AppColors.backgroundDeep,
+      border: Border.all(
+        color: AppColors.borderBright,
+        width: 2,
+      ),
+      boxShadow: const [
+        BoxShadow(
+          color: AppColors.black,
+          offset: Offset(5, 5),
         ),
       ],
-    );
-  }
-
-  Widget _buildScore(AnalysisResponse result) {
-    final score = result.healthScore;
-
-    return Column(
+    ),
+    child: Column(
       children: [
+        // ─────────────────────────────────────────
+        // FINAL SCORE
+        // ─────────────────────────────────────────
+
         Text(
-          score != null ? '$score / 100' : 'N/A',
+          'FINAL SCORE',
+          textAlign: TextAlign.center,
           style: AppTypography.arcade(
-            fontSize: 26,
-            color: _scoreColor(score),
+            fontSize: 22,
+            color: AppColors.cyan,
           ),
         ),
-        const SizedBox(height: 14),
-        Text(
-          result.rating.toUpperCase(),
-          style: AppTypography.arcade(
-            fontSize: 13,
-            color: _scoreColor(score),
-          ),
-        ),
+
         const SizedBox(height: 20),
-        if (score != null)
-          ClipRRect(
-            borderRadius: BorderRadius.zero,
-            child: LinearProgressIndicator(
-              value: score / 100,
-              minHeight: 14,
-              backgroundColor: AppColors.surfaceLight,
-              color: _scoreColor(score),
+
+        // ─────────────────────────────────────────
+        // DOTTED DIVIDER
+        // ─────────────────────────────────────────
+
+        _buildScoreDottedDivider(),
+
+        const SizedBox(height: 18),
+
+        // ─────────────────────────────────────────
+        // PRODUCT + BRAND
+        // ─────────────────────────────────────────
+
+        _buildScoreHudPanel(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 18,
+          ),
+          child: Row(
+  children: [
+    Expanded(
+  flex: 8,
+  child: Text(
+    result.productName ?? 'UNKNOWN PRODUCT',
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: AppTypography.arcade(
+      fontSize: 19,
+      color: AppColors.textPrimary,
+    ),
+  ),
+),
+
+    const SizedBox(width: 8),
+
+    Container(
+      width: 2,
+      height: 36,
+      color: AppColors.borderBright,
+    ),
+
+    const SizedBox(width: 8),
+
+    SizedBox(
+  width: 75,
+  child: Text(
+    result.brand ?? 'UNKNOWN BRAND',
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: AppTypography.bodySecondary.copyWith(
+      fontSize: 15,
+      color: AppColors.textSecondary,
+    ),
+  ),
+),
+  ],
+),
+        ),
+
+        const SizedBox(height: 14),
+
+        // ─────────────────────────────────────────
+        // SCORE + RATING
+        // ─────────────────────────────────────────
+
+        _buildScoreHudPanel(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 16,
+          ),
+          child: Row(
+  children: [
+    Expanded(
+      flex: 6,
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: _buildScoreValue(result),
+        ),
+      ),
+    ),
+
+    Container(
+      width: 2,
+      height: 52,
+      color: AppColors.borderBright,
+    ),
+
+    Expanded(
+      flex: 4,
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            result.rating.toUpperCase(),
+            style: AppTypography.arcade(
+              fontSize: 13,
+              color: scoreColor,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+),
+        ),
+
+        const SizedBox(height: 14),
+
+        // ─────────────────────────────────────────
+        // PROGRESS BAR
+        // ─────────────────────────────────────────
+
+        if (result.healthScore != null)
+          _buildScoreHudPanel(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 17,
+            ),
+            child: Container(
+              height: 16,
+              decoration: BoxDecoration(
+                color: AppColors.black,
+                border: Border.all(
+                  color: AppColors.border,
+                  width: 2,
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: FractionallySizedBox(
+                  widthFactor: result.healthScore! / 100,
+                  child: Container(
+                    color: scoreColor,
+                  ),
+                ),
+              ),
             ),
           ),
       ],
+    ),
+  );
+}
+
+  Widget _buildScoreHudPanel({
+  required Widget child,
+  EdgeInsetsGeometry padding = const EdgeInsets.all(16),
+}) {
+  return Container(
+    width: double.infinity,
+    padding: padding,
+    decoration: BoxDecoration(
+      color: AppColors.backgroundDeep,
+      border: Border.all(
+        color: AppColors.borderBright,
+        width: 2,
+      ),
+      boxShadow: const [
+        BoxShadow(
+          color: AppColors.black,
+          offset: Offset(3, 3),
+        ),
+      ],
+    ),
+    child: child,
+  );
+}
+
+  Widget _buildScoreDottedDivider() {
+  return SizedBox(
+    height: 6,
+    child: Row(
+      children: List.generate(
+        35,
+        (index) {
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Container(
+                height: 3,
+                color: index % 4 == 0
+                    ? AppColors.borderBright
+                    : AppColors.border,
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+  Widget _buildScoreValue(AnalysisResponse result) {
+  final score = result.healthScore;
+
+  if (score == null) {
+    return Text(
+      'N/A',
+      style: AppTypography.arcade(
+        fontSize: 20,
+        color: AppColors.textSecondary,
+      ),
     );
   }
+
+  final scoreColor = _scoreColor(score);
+
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.baseline,
+    textBaseline: TextBaseline.alphabetic,
+    children: [
+      Text(
+        '$score',
+        style: AppTypography.arcade(
+          fontSize: 38,
+          color: scoreColor,
+        ),
+      ),
+      const SizedBox(width: 7),
+      Text(
+        '/100',
+        style: AppTypography.arcade(
+          fontSize: 14,
+          color: scoreColor,
+        ),
+      ),
+    ],
+  );
+}
 
   Color _scoreColor(int? score) {
     if (score == null) return AppColors.textSecondary;
@@ -669,4 +895,72 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget _buildIngredientsSection(List<String> ingredients) {
+  final midpoint = (ingredients.length / 2).ceil();
+
+  final leftColumn = ingredients.sublist(0, midpoint);
+  final rightColumn = ingredients.sublist(midpoint);
+
+  Widget buildColumn(List<String> items) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: items.map(
+          (item) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '>',
+                    style: AppTypography.arcade(
+                      fontSize: 9,
+                      color: AppColors.cyan,
+                    ),
+                  ),
+                  const SizedBox(width: 7),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: AppTypography.body,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+
+  return Padding(
+    padding: const EdgeInsets.only(top: 14),
+    child: ArcadePanel(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'INGREDIENTS',
+            style: AppTypography.arcade(
+              fontSize: 10,
+              color: AppColors.cyan,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildColumn(leftColumn),
+              const SizedBox(width: 12),
+              buildColumn(rightColumn),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
 }
