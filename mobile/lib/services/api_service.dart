@@ -8,7 +8,7 @@ import '../models/analysis_response.dart';
 
 class ApiService {
   static const String _baseUrl =
-      'https://saarai-production.up.railway.app';
+      'https://saarai-api-163377210633.asia-south1.run.app';
 
   static const String _analyzeEndpoint = '/api/v1/analyze';
 
