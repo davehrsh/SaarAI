@@ -14,6 +14,8 @@ backend/.venv/
 .env
 .env.*
 backend/.env
+android/key.properties
+saarai-release.jks
 
 # Allow template env files
 !.env.example
