@@ -41,7 +41,7 @@ class GeminiService:
                 )
             )
 
-        logger.info("Sending request to Gemini model: gemini-flash-latest")
+        logger.info("Sending request to Gemini model: gemini-3.5-flash-lite")
 
         response = self.client.models.generate_content(
             model="gemini-3.5-flash-lite",
