@@ -30,9 +30,8 @@ class FoodAnalysisService:
                 image_bytes = await file.read()
 
                 logger.info(
-                    "Image %d read successfully. filename=%s content_type=%s size=%d bytes",
+                    "Image %d read successfully. content_type=%s size=%d bytes",
                     index,
-                    file.filename,
                     file.content_type,
                     len(image_bytes),
                 )
@@ -52,12 +51,10 @@ class FoodAnalysisService:
             gemini_response = gemini.describe_images(images)
 
             logger.info("Received response from Gemini.")
-            logger.debug("Raw Gemini response: %s", gemini_response)
 
             analysis = json.loads(gemini_response)
 
             logger.info("Successfully parsed Gemini JSON response.")
-            logger.debug("Parsed analysis: %s", analysis)
 
             analysis_result = AnalysisResult(**analysis)
 
