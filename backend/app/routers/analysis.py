@@ -46,8 +46,7 @@ async def analyze(files: list[UploadFile] = File(...)):
 
         if file.content_type not in ALLOWED_IMAGE_TYPES:
             logger.warning(
-                "Rejected upload due to unsupported media type. filename=%s content_type=%s",
-                file.filename,
+                "Rejected upload due to unsupported media type. content_type=%s",
                 file.content_type,
             )
 
