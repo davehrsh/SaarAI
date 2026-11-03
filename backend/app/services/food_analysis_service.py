@@ -59,9 +59,8 @@ class FoodAnalysisService:
             analysis_result = AnalysisResult(**analysis)
 
             logger.info(
-                "AnalysisResult validated successfully. is_food_product=%s health_score=%s",
+                "AnalysisResult validated successfully. is_food_product=%s",
                 analysis_result.is_food_product,
-                analysis_result.health_score,
             )
 
             if not analysis_result.is_food_product:
@@ -80,11 +79,7 @@ class FoodAnalysisService:
 
             rating = get_rating(analysis_result.health_score)
 
-            logger.info(
-                "Health rating calculated. score=%s rating=%s",
-                analysis_result.health_score,
-                rating,
-            )
+            logger.info("Health rating calculated.")
 
             analysis_response = AnalysisResponse(
                 **analysis_result.model_dump(),
