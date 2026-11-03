@@ -80,36 +80,31 @@ We do not sell user-uploaded images or analysis results. We do not use them for 
 
 SaarAI relies on third-party infrastructure providers to deliver its functionality.
 
-### A. Google Gemini API
+### A. Third-Party AI Processing Services
 
-SaarAI uses Google's Gemini API to analyze uploaded food images and generate AI-powered assessments.
+SaarAI uses third-party artificial intelligence models and services to analyze uploaded food images and generate food assessments.
 
 When you submit an image:
 1. The image is transmitted to SaarAI's backend.
-2. The backend sends the image and relevant instructions to the Gemini API.
-3. Gemini processes the request and returns an AI-generated response.
-4. SaarAI returns the analysis to your application.
+2. The backend sends the image and relevant instructions to the AI service provider selected by SaarAI.
+3. The provider processes the request and returns an AI-generated response.
+4. SaarAI processes that response and returns the analysis to your application.
 
-Google processes submitted content under its applicable API terms and data-processing policies.
+The AI service provider processes submitted content under its applicable terms, privacy notices, and data-processing policies. Depending on the provider and service configuration, submitted content may be temporarily processed or retained for service delivery, security, abuse monitoring, or legal compliance. Users should review the applicable provider policies for details.
 
-For Gemini API usage associated with an active Google Cloud Billing account, Google states that prompts and responses are not used to improve its products. However, Google may retain them for a limited period for abuse monitoring, safety, and legal or regulatory requirements.
+SaarAI does not maintain a permanent application-level database of uploaded images or analysis results. However, SaarAI does not control the independent data-handling practices of third-party AI providers.
 
-Google's processing and retention practices are governed by its own policies:
+SaarAI may change or add AI service providers as the application evolves. This policy will continue to describe the general processing flow; material changes to providers or processing practices will be reflected in this policy where appropriate.
 
-- [Google Privacy Policy](https://policies.google.com/privacy)
-- [Gemini API Terms of Service](https://ai.google.dev/gemini-api/terms)
-- [Gemini API Data Retention Information](https://ai.google.dev/gemini-api/docs/zdr)
+### B. Hosting and Infrastructure Provider
 
-### B. Google Cloud Platform
+SaarAI's backend infrastructure is currently hosted on Google Cloud Run.
 
-SaarAI's backend infrastructure is hosted on Google Cloud Run.
+The hosting provider may process technical information, including request logs, service diagnostics, and operational metadata, to provide, secure, and maintain its infrastructure.
 
-Google Cloud may process technical information, including request logs, service diagnostics, and operational metadata, to provide and maintain its infrastructure.
-
-Such information is subject to Google's applicable privacy and security policies.
+Such information is subject to the provider's applicable privacy and security policies.
 
 More information: [Google Cloud Privacy](https://cloud.google.com/terms/cloud-privacy-notice)
-
 ## 5. Data Storage and Retention
 
 SaarAI follows a stateless design principle.
@@ -161,7 +156,7 @@ If you believe that a child has provided personal information through the applic
 
 SaarAI's infrastructure and third-party service providers may process information in countries other than the country in which you reside.
 
-For example, Google may process information in locations where it or its service providers maintain infrastructure.
+For example, hosting providers and AI service providers may process information in locations where they or their service providers maintain infrastructure.
 
 Such processing is subject to the applicable privacy and data protection requirements and the policies of the respective service providers.
 
