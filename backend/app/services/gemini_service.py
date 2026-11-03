@@ -50,9 +50,7 @@ class GeminiService:
 
         logger.info("Received response from Gemini.")
 
-        if response.text:
-            logger.debug("Gemini response text: %s", response.text)
-        else:
+        if not response.text:
             logger.warning("Gemini response.text is empty.")
 
         return response.text
