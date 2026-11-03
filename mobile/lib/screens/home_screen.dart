@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_typography.dart';
@@ -200,6 +201,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<void> _openPrivacyPolicy() async {
+    final uri = Uri.parse(
+      'https://davehrsh.github.io/SaarAI/privacy-policy/',
+    );
+
+    final opened = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+
+    if (!opened && mounted) {
+      _showMessage('Unable to open the privacy policy.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,6 +229,29 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildHeader(),
               const SizedBox(height: 24),
               _buildMainContent(),
+              const SizedBox(height: 22),
+              Text(
+                'AI-generated food insights are informational only and are not medical advice.',
+                textAlign: TextAlign.center,
+                style: AppTypography.bodySecondary.copyWith(
+                  fontSize: 10,
+                  color: AppColors.textMuted,
+                ),
+              ),
+              TextButton.icon(
+                onPressed: _openPrivacyPolicy,
+                icon: const Icon(Icons.privacy_tip_outlined, size: 16),
+                label: Text(
+                  'PRIVACY POLICY',
+                  style: AppTypography.arcade(
+                    fontSize: 10,
+                    color: AppColors.cyan,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.cyan,
+                ),
+              ),
             ],
           ),
         ),
