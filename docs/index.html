@@ -9,6 +9,8 @@
   <meta property="og:description" content="A clearer picture of what you eat. AI-powered food intelligence, one photo at a time.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://davehrsh.github.io/SaarAI/">
+  <link rel="icon" type="image/png" href="assets/saarai-logo.png">
+  <link rel="apple-touch-icon" href="assets/saarai-logo.png">
   <title>SaarAI — Know your food. Own your choices.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +21,7 @@
     a{color:inherit}button{font:inherit}.wrap{width:min(1180px,calc(100% - 48px));margin:auto}
     .topbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
     .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-size:24px;font-weight:700;letter-spacing:-.07em}.brand span:last-child{color:var(--green)}
-    .brand-mark{width:34px;height:34px}.nav{display:flex;align-items:center;gap:34px}.nav a{font-size:13px;text-decoration:none;color:#515b54;transition:color .2s}.nav a:hover{color:#182418}
+    .brand-mark{width:34px;height:34px;object-fit:contain;display:block}.nav{display:flex;align-items:center;gap:34px}.nav a{font-size:13px;text-decoration:none;color:#515b54;transition:color .2s}.nav a:hover{color:#182418}
     .nav .nav-cta{background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px}.nav .nav-cta:hover{color:var(--lime)}
     .menu-btn{display:none;border:0;background:transparent;font-size:24px;color:var(--ink)}
     .hero{min-height:690px;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:50px;padding:70px 0 88px}
@@ -63,17 +65,7 @@
 <body id="top">
   <header class="wrap topbar">
     <a class="brand" href="#top" aria-label="SaarAI home">
-      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
-        <defs><linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5ff9c"/><stop offset=".55" stop-color="#8be477"/><stop offset="1" stop-color="#35a85d"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe36a"/><stop offset="1" stop-color="#f5a900"/></linearGradient></defs>
-        <circle cx="50" cy="50" r="46" fill="none" stroke="#d8ff76" stroke-width="2.3"/>
-        <g fill="url(#leaf)">
-          <path d="M50 11 C66 11 77 24 75 41 C73 54 59 58 50 69 C41 58 27 54 25 41 C23 24 34 11 50 11Z"/>
-          <path d="M89 50 C89 66 76 77 59 75 C46 73 42 59 31 50 C42 41 46 27 59 25 C76 23 89 34 89 50Z"/>
-          <path d="M50 89 C34 89 23 76 25 59 C27 46 41 42 50 31 C59 42 73 46 75 59 C77 76 66 89 50 89Z"/>
-          <path d="M11 50 C11 34 24 23 41 25 C54 27 58 41 69 50 C58 59 54 73 41 75 C24 77 11 66 11 50Z"/>
-        </g>
-        <g fill="url(#gold)"><path d="M51 15 C64 15 72 25 73 37 C66 35 59 37 51 44 C44 37 43 25 51 15Z"/><path d="M85 51 C85 64 75 72 63 73 C65 66 63 59 56 51 C63 44 75 43 85 51Z"/></g>
-      </svg>
+      <img class="brand-mark" src="assets/saarai-logo.png" alt="">
       <span>Saar<span>AI</span></span>
     </a>
     <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
