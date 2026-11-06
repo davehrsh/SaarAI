@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d12">
+  <title>{{ page.title }} — SaarAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#080d12;--paper:#f3f2e9;--muted:#69716b;--lime:#d8ff76;--line:rgba(8,13,18,.13)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 "DM Sans",system-ui,sans-serif}
+    a{color:inherit}header{background:var(--ink);color:var(--paper);padding:22px max(24px,calc((100vw - 1120px)/2));display:flex;justify-content:space-between;align-items:center}
+    .brand{font-weight:700;letter-spacing:-.06em;font-size:23px;text-decoration:none}.brand span{color:var(--lime)}header a:last-child{font-size:13px;text-decoration:none;color:#d8dfd7}
+    main{width:min(820px,calc(100% - 40px));margin:80px auto 100px}.eyebrow{font:11px "DM Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:#73826d}
+    h1{font-size:clamp(42px,7vw,68px);letter-spacing:-.065em;line-height:1.04;margin:14px 0 18px}
+    .intro{font-size:18px;color:#59615c;max-width:680px;margin-bottom:46px}
+    article{border-top:1px solid var(--line);padding-top:28px}h2{font-size:23px;letter-spacing:-.04em;margin:34px 0 8px;line-height:1.2}h3{font-size:16px;margin:24px 0 6px}p,li{color:#3f4842}ul{padding-left:22px}li{padding-left:4px;margin:6px 0}
+    strong{color:var(--ink)}a:hover{color:#567a2c}
+    footer{background:var(--ink);color:#d8dfd7;padding:28px max(24px,calc((100vw - 1120px)/2));font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    footer a{color:var(--lime);text-decoration:none}
+    @media(max-width:600px){main{margin:54px auto 72px}.intro{font-size:16px}header{padding:18px 20px}}
+  </style>
+</head>
+<body>
+  <header><a class="brand" href="{{ site.baseurl }}/">Saar<span>AI</span></a><a href="{{ site.baseurl }}/">← Back to SaarAI</a></header>
+  <main>
+    <div class="eyebrow">SAARAI · TRANSPARENCY</div>
+    <h1>{{ page.title }}</h1>
+    <p class="intro">Understanding your food should not come at the cost of your privacy.</p>
+    <article>{{ content }}</article>
+  </main>
+  <footer><span>© 2026 SaarAI · Dave Labs</span><a href="mailto:daveharshpvt@gmail.com">Privacy questions? Contact us</a></footer>
+</body>
+</html>
