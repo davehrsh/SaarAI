@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/theme/app_colors.dart';
@@ -82,7 +83,76 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<bool> _ensureCameraPermission() async {
+    var status = await Permission.camera.status;
+
+    if (status.isGranted) return true;
+
+    if (status.isDenied) {
+      status = await Permission.camera.request();
+    }
+
+    if (status.isGranted) return true;
+    if (!mounted) return false;
+
+    final permanentlyDenied =
+        status.isPermanentlyDenied || status.isRestricted;
+
+    final shouldContinue = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text(
+          permanentlyDenied ? 'CAMERA ACCESS BLOCKED' : 'CAMERA PERMISSION',
+          style: AppTypography.arcade(
+            fontSize: 12,
+            color: AppColors.neonGreen,
+          ),
+        ),
+        content: Text(
+          permanentlyDenied
+              ? 'Camera access is disabled for SaarAI. Enable it in app settings to take food photos.'
+              : 'SaarAI needs camera access so you can take a photo of your food.',
+          style: AppTypography.bodySecondary,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text('CANCEL', style: AppTypography.arcade(fontSize: 9)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(
+              permanentlyDenied ? 'OPEN SETTINGS' : 'TRY AGAIN',
+              style: AppTypography.arcade(
+                fontSize: 9,
+                color: AppColors.neonGreen,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldContinue != true) return false;
+
+    if (permanentlyDenied) {
+      await openAppSettings();
+      return false;
+    }
+
+    status = await Permission.camera.request();
+    if (status.isGranted) return true;
+
+    if (mounted) {
+      _showMessage('Camera permission was not granted.');
+    }
+    return false;
+  }
+
   Future<void> _pickFromCamera() async {
+    if (!await _ensureCameraPermission()) return;
+
     try {
       final image = await _imagePicker.pickImage(
         source: ImageSource.camera,
