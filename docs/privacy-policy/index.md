@@ -1,3 +1,9 @@
+---
+layout: legal
+title: Privacy Policy
+permalink: /privacy-policy/
+---
+
 # SaarAI – Privacy Policy
 
 **Effective Date:** November 2, 2026  
@@ -105,6 +111,7 @@ The hosting provider may process technical information, including request logs, 
 Such information is subject to the provider's applicable privacy and security policies.
 
 More information: [Google Cloud Privacy](https://cloud.google.com/terms/cloud-privacy-notice)
+
 ## 5. Data Storage and Retention
 
 SaarAI follows a stateless design principle.
@@ -189,6 +196,7 @@ For questions, concerns, or requests relating to this Privacy Policy or SaarAI's
 **Developer:** Dave Labs  
 **Application:** SaarAI  
 **Privacy Contact Email:** daveharshpvt@gmail.com
+
 ---
 
 **SaarAI — Know your food. Own your choices.**
