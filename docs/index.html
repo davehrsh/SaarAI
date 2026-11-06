@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d12">
+  <meta name="description" content="SaarAI turns a food photo into a clearer picture of what's on your plate. Get an AI-powered food assessment, health score and easy-to-understand insights.">
+  <meta property="og:title" content="SaarAI — Know your food. Own your choices.">
+  <meta property="og:description" content="A clearer picture of what you eat. AI-powered food intelligence, one photo at a time.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://davehrsh.github.io/SaarAI/">
+  <title>SaarAI — Know your food. Own your choices.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#080d12;--ink2:#111a1b;--paper:#f3f2e9;--paper2:#e9ecdf;--lime:#d8ff76;--green:#68c979;--saffron:#ffc43d;--muted:#687169;--line:rgba(8,13,18,.14);--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;--mono:"DM Mono",monospace}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+    a{color:inherit}button{font:inherit}.wrap{width:min(1180px,calc(100% - 48px));margin:auto}
+    .topbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-size:24px;font-weight:700;letter-spacing:-.07em}.brand span:last-child{color:var(--green)}
+    .brand-mark{width:34px;height:34px}.nav{display:flex;align-items:center;gap:34px}.nav a{font-size:13px;text-decoration:none;color:#515b54;transition:color .2s}.nav a:hover{color:#182418}
+    .nav .nav-cta{background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px}.nav .nav-cta:hover{color:var(--lime)}
+    .menu-btn{display:none;border:0;background:transparent;font-size:24px;color:var(--ink)}
+    .hero{min-height:690px;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:50px;padding:70px 0 88px}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font:11px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:#55664b}.eyebrow:before{content:"";width:24px;height:1px;background:#7d9d54}
+    h1{font-size:clamp(58px,7.3vw,102px);line-height:.99;letter-spacing:-.085em;font-weight:600;margin:25px 0 27px;max-width:660px}
+    h1 em{font-family:var(--serif);font-weight:500;color:#629d55;letter-spacing:-.07em}
+    .hero-copy{max-width:500px;color:#5d665e;font-size:17px;line-height:1.75;margin:0 0 32px}
+    .actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:999px;padding:15px 21px;text-decoration:none;font-size:13px;font-weight:600;transition:transform .2s,background .2s}.btn:hover{transform:translateY(-2px)}.btn-dark{background:var(--ink);color:var(--paper)}.btn-dark:hover{background:#233128;color:var(--lime)}.btn-quiet{border:1px solid var(--line);color:#344038}
+    .hero-note{margin-top:28px;display:flex;align-items:center;gap:10px;color:#768076;font:11px var(--mono);letter-spacing:.04em}.dot{width:7px;height:7px;background:#78be65;border-radius:50%;box-shadow:0 0 0 4px rgba(104,201,121,.14)}
+    .hero-art{height:535px;border-radius:28px;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;isolation:isolate;box-shadow:0 30px 80px rgba(20,33,24,.16)}
+    .hero-art:before{content:"";position:absolute;inset:-18%;background:radial-gradient(ellipse at 53% 47%,rgba(95,176,102,.32),transparent 36%),radial-gradient(ellipse at 80% 18%,rgba(255,196,61,.2),transparent 30%),radial-gradient(ellipse at 12% 82%,rgba(216,255,118,.13),transparent 28%);z-index:-1}
+    .art-label{position:absolute;top:26px;left:28px;color:#9ba69a;font:10px var(--mono);letter-spacing:.15em}.art-index{position:absolute;right:28px;top:26px;color:var(--lime);font:11px var(--mono)}
+    .plate{width:min(72%,360px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 48%,#f8f1dc 0 49%,#d7d5c8 50% 53%,#fff9ea 54% 61%,#a7b098 62% 63%,#17231b 64%);display:grid;place-items:center;position:relative;box-shadow:0 35px 65px rgba(0,0,0,.35);transform:rotate(-9deg)}
+    .meal{width:74%;height:74%;border-radius:50%;overflow:hidden;position:relative;background:radial-gradient(ellipse at 35% 28%,#f5cf55 0 10%,transparent 11%),radial-gradient(ellipse at 68% 38%,#db7040 0 12%,transparent 13%),radial-gradient(ellipse at 44% 69%,#6e9d55 0 19%,transparent 20%),radial-gradient(ellipse at 74% 72%,#edb64b 0 12%,transparent 13%),radial-gradient(ellipse at 28% 52%,#d4a14d 0 13%,transparent 14%),radial-gradient(ellipse at 50% 50%,#7e9f5d 0 48%,#526b3e 68%,#34452c 100%)}
+    .meal:before,.meal:after{content:"";position:absolute;width:45%;height:17%;background:linear-gradient(90deg,#b5d98a,#4b9f5a);border-radius:100% 0 100% 0;transform:rotate(-36deg);top:32%;left:21%;box-shadow:18px 25px 0 -3px #9ac96f,-5px 48px 0 -4px #e5c64c}
+    .meal:after{transform:rotate(142deg);left:50%;top:48%;background:linear-gradient(90deg,#d4e88e,#4a9d53);box-shadow:-18px 25px 0 -3px #92c66d,0 48px 0 -4px #f2c74f}
+    .scan-ring{position:absolute;width:82%;aspect-ratio:1;border:1px solid rgba(216,255,118,.42);border-radius:50%;animation:orbit 22s linear infinite}.scan-ring:before,.scan-ring:after{content:"";position:absolute;width:8px;height:8px;background:var(--lime);border-radius:50%;box-shadow:0 0 20px var(--lime)}.scan-ring:before{top:12%;left:17%}.scan-ring:after{bottom:18%;right:9%;width:5px;height:5px}
+    @keyframes orbit{to{transform:rotate(360deg)}}
+    .score-card{position:absolute;right:22px;bottom:25px;width:205px;padding:17px 18px;border:1px solid rgba(255,255,255,.16);border-radius:16px;background:rgba(9,16,18,.83);backdrop-filter:blur(14px);color:white;box-shadow:0 18px 40px rgba(0,0,0,.24)}
+    .score-top{display:flex;justify-content:space-between;align-items:center;color:#aab6a8;font:9px var(--mono);letter-spacing:.1em}.score-number{font-size:46px;letter-spacing:-.08em;line-height:1.05;margin:12px 0 5px}.score-number small{font:11px var(--mono);color:#aab6a8;letter-spacing:0}.score-status{display:inline-block;background:rgba(216,255,118,.13);color:var(--lime);padding:5px 9px;border-radius:30px;font:10px var(--mono)}
+    .art-foot{position:absolute;left:28px;bottom:28px;color:#a7b0a4;font:10px var(--mono);letter-spacing:.08em}.preview-tag{position:absolute;top:60px;right:26px;color:#b6c0b3;font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .ticker{background:var(--lime);color:#1d2a1d;overflow:hidden;padding:15px 0;white-space:nowrap;font:11px var(--mono);letter-spacing:.17em;text-transform:uppercase}.ticker-track{display:flex;justify-content:space-around;gap:35px}.ticker span{display:flex;align-items:center;gap:14px}.ticker b{font-size:16px}
+    section{padding:110px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:48px}.kicker{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#71816b}
+    h2{font-size:clamp(38px,5vw,64px);line-height:1.04;letter-spacing:-.075em;font-weight:600;margin:14px 0 0;max-width:700px}.section-intro{max-width:335px;color:#697269;font-size:14px;line-height:1.8;margin:0}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{background:#e9ebdf;border:1px solid rgba(8,13,18,.045);border-radius:20px;padding:28px 27px 31px;min-height:235px;transition:transform .25s,background .25s}.feature:hover{transform:translateY(-5px);background:#e3e9d7}
+    .feature-icon{width:42px;height:42px;border-radius:13px;background:var(--ink);color:var(--lime);display:grid;place-items:center;margin-bottom:28px}.feature-icon svg{width:20px;height:20px}.feature h3{font-size:18px;letter-spacing:-.04em;margin:0 0 9px}.feature p{color:#687168;font-size:13px;line-height:1.75;margin:0}
+    .how{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}.how:after{content:"";position:absolute;width:500px;height:500px;right:-200px;top:-180px;border-radius:50%;border:1px solid rgba(216,255,118,.15);box-shadow:0 0 0 45px rgba(216,255,118,.025),0 0 0 90px rgba(216,255,118,.02);pointer-events:none}
+    .how .kicker{color:var(--lime)}.how .section-intro{color:#9ba69a}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;position:relative;z-index:1}.step{border-top:1px solid rgba(255,255,255,.2);padding-top:20px}.step-no{font:11px var(--mono);color:var(--lime)}.step h3{font-size:24px;letter-spacing:-.05em;margin:37px 0 10px}.step p{color:#a8b1a5;font-size:14px;line-height:1.8;max-width:290px;margin:0}
+    .ratings{display:flex;gap:8px;flex-wrap:wrap;margin-top:33px}.rating{padding:12px 16px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:#4d594f}.rating:first-child{background:#dff0c4;border-color:transparent;color:#29492b}.rating:last-child{background:#f7e5d4;border-color:transparent;color:#7e4b25}
+    .meaning{background:#e8ecdf;padding:0}.meaning-grid{display:grid;grid-template-columns:.8fr 1.2fr;min-height:390px;align-items:center;gap:65px}.sanskrit{font-size:clamp(80px,14vw,160px);font-weight:500;letter-spacing:-.1em;color:#6caa58;line-height:1;text-align:center;font-family:serif}.meaning-copy h2{max-width:600px}.meaning-copy p{color:#677168;line-height:1.85;max-width:550px;font-size:15px}.meaning-copy strong{color:var(--ink)}
+    .privacy{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}.privacy-panel{background:var(--ink);color:var(--paper);border-radius:22px;padding:35px}.privacy-panel h3{font-size:25px;letter-spacing:-.05em;margin:0 0 14px}.privacy-panel p{color:#aab4a8;font-size:13px;line-height:1.8;margin:0 0 24px}.privacy-link{color:var(--lime);font-size:12px;text-decoration:none;border-bottom:1px solid rgba(216,255,118,.35);padding-bottom:5px}.privacy-points{display:grid;gap:18px}.privacy-point{display:flex;gap:14px;align-items:start}.check{width:25px;height:25px;display:grid;place-items:center;flex:none;border-radius:50%;background:#e2ecd8;color:#527e3e;font-size:13px}.privacy-point strong{display:block;font-size:14px;margin-bottom:3px}.privacy-point span{display:block;color:#687168;font-size:12px;line-height:1.7}
+    .closing{background:var(--lime);padding:76px 0}.closing-inner{display:flex;justify-content:space-between;align-items:center;gap:30px}.closing h2{font-size:clamp(38px,5.5vw,70px);max-width:680px}.closing .btn{background:var(--ink);color:var(--paper);white-space:nowrap}
+    footer{background:var(--ink);color:#d1d8cf;padding:36px 0}.footer-row{display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap}.footer-brand{font-size:21px;font-weight:700;letter-spacing:-.06em}.footer-brand span{color:var(--lime)}.footer-copy{font-size:11px;color:#8f9b8f}.footer-links{display:flex;gap:22px}.footer-links a{font-size:12px;color:#c4cec2;text-decoration:none}.footer-links a:hover{color:var(--lime)}
+    .disclaimer{font-size:10px;line-height:1.7;color:#7f8a7f;margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;gap:45px;padding:70px 0}.hero-art{height:490px}.features{grid-template-columns:repeat(2,1fr)}.meaning-grid{gap:25px}.privacy{gap:28px}}
+    @media(max-width:650px){.wrap{width:min(100% - 36px,1180px)}.topbar{height:70px}.menu-btn{display:block}.nav{display:none;position:absolute;top:70px;left:0;right:0;background:var(--paper);z-index:10;padding:18px 24px 25px;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:20px}.nav.open{display:flex}.nav .nav-cta{text-align:center}.hero{min-height:0;padding:54px 0 65px}h1{font-size:clamp(56px,15vw,82px);margin:20px 0}.hero-copy{font-size:15px}.hero-art{height:410px;border-radius:21px}.plate{width:70%}.score-card{width:165px;right:14px;bottom:15px;padding:13px}.score-number{font-size:38px}.art-label{left:18px;top:19px}.art-index{right:18px;top:19px}.art-foot{left:18px;bottom:20px}.preview-tag{right:18px;top:46px}.ticker-track{justify-content:flex-start;animation:marquee 22s linear infinite}.ticker span{flex:none}@keyframes marquee{to{transform:translateX(-30%)}}section{padding:78px 0}.section-head{display:block;margin-bottom:32px}.section-intro{margin-top:17px}.features{grid-template-columns:1fr}.feature{min-height:0}.steps{grid-template-columns:1fr;gap:27px}.step h3{margin:20px 0 8px}.meaning-grid{grid-template-columns:1fr;gap:16px;padding:60px 0}.sanskrit{text-align:left;font-size:100px}.privacy{grid-template-columns:1fr}.privacy-panel{padding:27px}.closing{padding:62px 0}.closing-inner{display:block}.closing .btn{margin-top:24px}.footer-row{align-items:flex-start;flex-direction:column}.disclaimer{margin-top:15px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scan-ring{animation:none}.reveal{opacity:1;transform:none;transition:none}.ticker-track{animation:none}}
+  </style>
+</head>
+<body id="top">
+  <header class="wrap topbar">
+    <a class="brand" href="#top" aria-label="SaarAI home">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5ff9c"/><stop offset=".55" stop-color="#8be477"/><stop offset="1" stop-color="#35a85d"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe36a"/><stop offset="1" stop-color="#f5a900"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="46" fill="none" stroke="#d8ff76" stroke-width="2.3"/>
+        <g fill="url(#leaf)">
+          <path d="M50 11 C66 11 77 24 75 41 C73 54 59 58 50 69 C41 58 27 54 25 41 C23 24 34 11 50 11Z"/>
+          <path d="M89 50 C89 66 76 77 59 75 C46 73 42 59 31 50 C42 41 46 27 59 25 C76 23 89 34 89 50Z"/>
+          <path d="M50 89 C34 89 23 76 25 59 C27 46 41 42 50 31 C59 42 73 46 75 59 C77 76 66 89 50 89Z"/>
+          <path d="M11 50 C11 34 24 23 41 25 C54 27 58 41 69 50 C58 59 54 73 41 75 C24 77 11 66 11 50Z"/>
+        </g>
+        <g fill="url(#gold)"><path d="M51 15 C64 15 72 25 73 37 C66 35 59 37 51 44 C44 37 43 25 51 15Z"/><path d="M85 51 C85 64 75 72 63 73 C65 66 63 59 56 51 C63 44 75 43 85 51Z"/></g>
+      </svg>
+      <span>Saar<span>AI</span></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#why">Why SaarAI</a><a href="#how">How it works</a><a href="#meaning">The name</a><a href="privacy-policy/">Privacy</a><a class="nav-cta" href="#how">Explore SaarAI ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div class="hero-copy-wrap">
+        <div class="eyebrow">FOOD INTELLIGENCE · MADE SIMPLE</div>
+        <h1>See your food <em>more clearly.</em></h1>
+        <p class="hero-copy">What you eat matters. Now, understanding it can be as simple as taking a photo. SaarAI turns food images into an AI-powered assessment, a health score and clear insights you can actually use.</p>
+        <div class="actions"><a class="btn btn-dark" href="#how">Discover how it works <span>↗</span></a><a class="btn btn-quiet" href="privacy-policy/">Our approach to privacy</a></div>
+        <div class="hero-note"><span class="dot"></span> ONE PHOTO. A CLEARER PICTURE.</div>
+      </div>
+      <div class="hero-art" aria-label="Illustrative food intelligence visual">
+        <div class="art-label">SAARAI / FOOD INTELLIGENCE</div><div class="art-index">01 — 03</div><div class="preview-tag">Illustrative visual</div>
+        <div class="scan-ring"></div><div class="plate"><div class="meal"></div></div>
+        <div class="score-card"><div class="score-top"><span>FOOD SNAPSHOT</span><span>AI / 01</span></div><div class="score-number">82<small> / 100</small></div><span class="score-status">GOOD · SAMPLE</span></div>
+        <div class="art-foot">CAPTURE → UNDERSTAND → CHOOSE</div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Capture, understand, choose">
+      <div class="wrap ticker-track"><span>CAPTURE <b>✳</b></span><span>UNDERSTAND <b>✳</b></span><span>CHOOSE <b>✳</b></span><span>CAPTURE <b>✳</b></span><span>UNDERSTAND <b>✳</b></span><span>CHOOSE <b>✳</b></span></div>
+    </div>
+
+    <section class="wrap" id="why">
+      <div class="section-head reveal"><div><div class="kicker">01 / WHY SAARAI</div><h2>Less guesswork.<br>More food awareness.</h2></div><p class="section-intro">No complicated research or confusing labels. Just a simple way to turn a food photo into information that is easier to understand.</p></div>
+      <div class="features">
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h2l1.3-1.5h4.4L15.5 5h2A2.5 2.5 0 0 1 20 7.5v10a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.5" r="3.5"/></svg></div><h3>Know before you eat</h3><p>Capture a food photo or choose one from your gallery to get an AI-powered assessment.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5m0 14h16"/><path d="M7 15l3-4 3 2 5-7"/><path d="M16 6h2v2"/></svg></div><h3>A score at a glance</h3><p>See an assessed food health score out of 100, giving you a quick starting point for understanding the result.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 7.5 7.5 9.5 4.3-2 7.5-5 7.5-9.5V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></div><h3>Clear ratings</h3><p>Translate the assessment into plain-language ratings, from Excellent and Good to Poor or Avoid Consumption.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19c0-7 4-12 14-14-1 10-6 14-14 14Z"/><path d="M5 19c2-4 5-7 10-10"/></svg></div><h3>Understand the details</h3><p>Explore ingredient and nutrition information, useful context and easy-to-follow insights.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/><circle cx="12" cy="12" r="6"/><path d="m9.5 12 1.7 1.7 3.4-3.5"/></svg></div><h3>Make more mindful choices</h3><p>Use food insights as one more tool to become conscious of what goes on your plate.</p></article>
+        <article class="feature reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 14 9l6 3-6 2-2 7-2-7-6-2 6-3z"/><path d="m19 3 .8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8z"/></svg></div><h3>Built for everyday use</h3><p>A straightforward experience designed to make food understanding feel less intimidating.</p></article>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="wrap">
+        <div class="section-head reveal"><div><div class="kicker">02 / HOW IT WORKS</div><h2>One photo.<br>Three simple steps.</h2></div><p class="section-intro">A lightweight flow from the food in front of you to information you can use to make your own decisions.</p></div>
+        <div class="steps">
+          <article class="step reveal"><div class="step-no">STEP / 01</div><h3>Capture</h3><p>Take a photo of your food or select an existing image from your gallery.</p></article>
+          <article class="step reveal"><div class="step-no">STEP / 02</div><h3>Understand</h3><p>SaarAI analyses the image and returns an AI-generated score, rating and supporting insights.</p></article>
+          <article class="step reveal"><div class="step-no">STEP / 03</div><h3>Choose</h3><p>Use the information as a starting point to make more informed everyday food choices.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head reveal"><div><div class="kicker">03 / THE RESULT</div><h2>Clarity, without the jargon.</h2></div><p class="section-intro">SaarAI presents its assessment in a simple rating scale that is easier to scan and understand.</p></div>
+      <div class="ratings reveal"><span class="rating">Excellent</span><span class="rating">Good</span><span class="rating">Moderate</span><span class="rating">Poor</span><span class="rating">Avoid Consumption</span></div>
+    </section>
+
+    <section class="meaning" id="meaning">
+      <div class="wrap meaning-grid">
+        <div class="sanskrit reveal" lang="sa">सार</div>
+        <div class="meaning-copy reveal"><div class="kicker">04 / THE NAME</div><h2>Find the <em style="font-family:var(--serif);font-weight:500;color:#629d55">saar</em> in every bite.</h2><p>The name <strong>SaarAI</strong> draws from the Sanskrit word <strong>Saar (सार)</strong>, meaning essence or the essential nature of something, combined with AI. It reflects our aim: to help uncover the essence of the food you eat, one image at a time.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap privacy" id="privacy">
+      <div class="reveal"><div class="kicker">05 / YOUR PRIVACY</div><h2>Food insights should feel simple. Privacy should too.</h2><p class="section-intro" style="margin-top:22px">SaarAI is designed without mandatory accounts or a permanent in-app food history. Images are sent to the backend for analysis, while third-party AI and infrastructure services may process content or technical information under their own policies.</p></div>
+      <div class="privacy-panel reveal"><h3>Designed with restraint.</h3><p>We aim to collect and retain only what is needed to deliver the service. Read the full policy for details about image processing, third-party services, retention and your privacy rights.</p><a class="privacy-link" href="privacy-policy/">Read the privacy policy ↗</a></div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap closing-inner"><h2>A little more understanding can change the way you choose.</h2><a class="btn" href="mailto:daveharshpvt@gmail.com">Get in touch <span>↗</span></a></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-row"><div><div class="footer-brand">Saar<span>AI</span></div><div class="footer-copy">Know your food. Own your choices.</div></div><div class="footer-links"><a href="#why">Why SaarAI</a><a href="#how">How it works</a><a href="privacy-policy/">Privacy policy</a><a href="mailto:daveharshpvt@gmail.com">Contact</a></div><div class="footer-copy">© 2026 SaarAI · Dave Labs</div></div>
+      <div class="disclaimer">SaarAI provides AI-generated food assessments for general informational purposes only. Scores and insights may be incomplete or inaccurate and are not medical, dietary or professional nutrition advice. Always verify ingredient, nutrition and allergen information on the product label and consult a qualified professional for individual health needs.</div>
+    </div>
+  </footer>
+  <script>
+    const menuBtn=document.getElementById('menuBtn');
+    const nav=document.getElementById('nav');
+    menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('aria-label',open?'Close navigation':'Open navigation');menuBtn.textContent=open?'×':'☰';});
+    nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰';}));
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));}
+  </script>
+</body>
+</html>
