@@ -88,11 +88,7 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Create a `.env` file in the project root. The sample below uses a generic placeholder; the actual backend currently expects a provider-specific environment variable.
-
-```env
-<provider-specific-api-key-variable>=your_api_key_here
-```
+Create a `.env` file in the project root and set the AI model provider credential required by `backend/app/core/config.py`. Keep credentials out of version control.
 
 ---
 
