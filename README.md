@@ -1,6 +1,6 @@
 # SaarAI Backend
 
-AI-powered packaged food analysis API built with **FastAPI** and **Google Gemini**.
+AI-powered packaged food analysis API built with **FastAPI** and **a third-party AI model**.
 
 The API analyzes one or more images of a packaged food product and returns a structured nutritional assessment, including ingredients, allergens, health score, confidence level, and summary.
 
@@ -28,7 +28,7 @@ The API analyzes one or more images of a packaged food product and returns a str
 
 - Python 3.13
 - FastAPI
-- Google Gemini API
+- AI model provider API
 - Pydantic
 - Uvicorn
 
@@ -88,10 +88,10 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root. The sample below uses a generic placeholder; the actual backend currently expects a provider-specific environment variable.
 
 ```env
-GEMINI_API_KEY=your_api_key_here
+<provider-specific-api-key-variable>=your_api_key_here
 ```
 
 ---
