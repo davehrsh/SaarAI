@@ -1,0 +1,6 @@
+title: SaarAI
+description: Understand your food with a photo. AI-powered food intelligence for more informed everyday choices.
+url: "https://davehrsh.github.io"
+baseurl: "/SaarAI"
+markdown: kramdown
+permalink: pretty
