@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildMainContent(),
               const SizedBox(height: 22),
               Text(
-                'AI-generated food insights are informational only and are not medical advice.',
+                'AI-generated scores and allergen information may be inaccurate. Always check the original product label, especially for allergies. SaarAI is not a medical device and does not diagnose, treat, cure, or prevent medical conditions. Consult a healthcare professional for medical advice.',
                 textAlign: TextAlign.center,
                 style: AppTypography.bodySecondary.copyWith(
                   fontSize: 10,
