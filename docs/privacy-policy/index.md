@@ -7,7 +7,7 @@ permalink: /privacy-policy/
 # SaarAI – Privacy Policy
 
 **Effective Date:** November 2, 2026  
-**Last Updated:** November 2, 2026
+**Last Updated:** November 12, 2026
 
 ## 1. Introduction
 
@@ -88,7 +88,7 @@ SaarAI relies on third-party infrastructure providers to deliver its functionali
 
 ### A. Third-Party AI Processing Services
 
-SaarAI uses third-party artificial intelligence models and services to analyze uploaded food images and generate food assessments.
+SaarAI currently uses Google's Gemini AI service to analyze uploaded food images and generate food assessments. Uploaded images and relevant analysis instructions are transmitted from SaarAI's Google Cloud Run backend to the Gemini API. This processing is necessary to provide the requested analysis.
 
 When you submit an image:
 1. The image is transmitted to SaarAI's backend.
@@ -128,6 +128,10 @@ Images and analysis content are processed to fulfill the user's request and are 
 However, limited technical information may remain in infrastructure logs, and third-party providers may retain submitted content for limited periods under their applicable terms and policies.
 
 Therefore, stateless application architecture does not mean that every service involved provides zero data retention.
+
+### AI Accuracy and Allergen Safety
+
+AI-generated nutrition scores, ingredient identification, and allergen information may be inaccurate or incomplete. Always verify ingredients and allergens against the original product packaging and manufacturer information, particularly when managing food allergies or dietary restrictions. SaarAI is not a medical device and does not diagnose, treat, cure, or prevent medical conditions. Consult a qualified healthcare professional for medical advice.
 
 ## 6. Data Security
 
