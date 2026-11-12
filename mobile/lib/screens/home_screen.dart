@@ -423,6 +423,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 18),
           _buildImagePreview(),
           const SizedBox(height: 18),
+          Text(
+            'Selected photos are securely sent to our backend and a third-party AI engine for analysis. Avoid including personal or sensitive information in photos.',
+            textAlign: TextAlign.center,
+            style: AppTypography.bodySecondary.copyWith(fontSize: 11),
+          ),
+          const SizedBox(height: 12),
           ArcadeButton(
             label: 'ANALYZE FOOD',
             icon: Icons.bolt,
