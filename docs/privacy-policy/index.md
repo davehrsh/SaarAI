@@ -88,7 +88,7 @@ SaarAI relies on third-party infrastructure providers to deliver its functionali
 
 ### A. Third-Party AI Processing Services
 
-SaarAI currently uses Google's Gemini AI service to analyze uploaded food images and generate food assessments. Uploaded images and relevant analysis instructions are transmitted from SaarAI's Google Cloud Run backend to the Gemini API. This processing is necessary to provide the requested analysis.
+SaarAI uses a third-party AI processing service to analyze uploaded food images and generate food assessments. Uploaded images and relevant analysis instructions are transmitted from SaarAI's backend to an external AI model provider. This processing is necessary to provide the requested analysis. The provider acts as a data processor or service provider subject to its applicable terms and data-handling practices.
 
 When you submit an image:
 1. The image is transmitted to SaarAI's backend.
